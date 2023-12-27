@@ -23,7 +23,8 @@ struct ContentView: View {
 			} //end List
 			.navigationTitle("Hikes")
 			.navigationDestination(for: Hike.self) { hike in
-				Text(hike.name)
+//				Text(hike.name)
+				HikeDetailScreen(hike: hike)
 			}
 		} //end NavigationStack)
     }
