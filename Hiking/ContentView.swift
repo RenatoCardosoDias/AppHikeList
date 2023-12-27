@@ -15,23 +15,40 @@ struct ContentView: View {
 		Hike(name: "Tamanawas Falls", photo: "tam", miles: 5)
 	]
     var body: some View {
-		List(hikes) { hike in
-			HStack(alignment: .top) {
-				Image(hike.photo)
-					.resizable()
-					.aspectRatio(contentMode: .fit)
-					.clipShape(RoundedRectangle(cornerRadius: 10.0, style: .continuous))
-					.frame(width: 75)
-				VStack(alignment: .leading) {
-					Text(hike.name)
-						.font(.footnote)
-					Text("\(hike.miles.formatted()) Miles")
+		NavigationStack {
+			List(hikes) { hike in
+				NavigationLink(value: hike) {
+					HikeCellView(hike: hike)
 				}
+			} //end List
+			.navigationTitle("Hikes")
+			.navigationDestination(for: Hike.self) { hike in
+				Text(hike.name)
 			}
-		}
+		} //end NavigationStack)
     }
 }
 
 #Preview {
     ContentView()
+}
+
+struct HikeCellView: View {
+	
+	let hike: Hike
+
+	var body: some View {
+		HStack(alignment: .top) {
+			Image(hike.photo)
+				.resizable()
+				.aspectRatio(contentMode: .fit)
+				.clipShape(RoundedRectangle(cornerRadius: 10.0, style: .continuous))
+				.frame(width: 75)
+			VStack(alignment: .leading) {
+				Text(hike.name)
+					.font(.footnote)
+				Text("\(hike.miles.formatted()) Miles")
+			}
+		}
+	}
 }
